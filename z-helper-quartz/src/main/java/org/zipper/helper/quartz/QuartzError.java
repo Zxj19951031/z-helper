@@ -11,7 +11,8 @@ public enum QuartzError implements IErrorCode {
     CHECK_EXISTS_ERROR(2006, "校验任务存在异常"),
     ADD_JOB_ERROR(2007, "添加任务异常"),
     STOP_JOB_ERROR(2008, "停止任务异常"),
-    INTERRUPT_JOB_ERROR(2009, "中断任务异常"),;
+    INTERRUPT_JOB_ERROR(2009, "中断任务异常"),
+    ;
 
     private final Integer code;
     private final String msg;
@@ -23,12 +24,12 @@ public enum QuartzError implements IErrorCode {
 
     @Override
     public Integer getCode() {
-        return null;
+        return this.code;
     }
 
     @Override
     public String getMsg() {
-        return null;
+        return this.msg;
     }
 
     @Override

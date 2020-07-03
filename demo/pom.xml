@@ -33,12 +33,12 @@
         <dependency>
             <groupId>org.zipper</groupId>
             <artifactId>z-helper-swagger</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.zipper</groupId>
             <artifactId>z-helper-web</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>

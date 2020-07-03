@@ -1,17 +1,11 @@
-package org.zipper.helper.exception;
+package org.zipper.helper.swagger;
 
-/**
- * 框架错误码
- *
- * @author zhuxj
- */
-public enum ErrorCode implements IErrorCode {
+import org.zipper.helper.exception.IErrorCode;
 
-    SYSTEM_ERROR(1001, "系统内部错误"),
-    PARAMETER_ERROR(1002, "参数错误"),
-    IO_ERROR(1003, "IO异常");
+public enum SwaggerError implements IErrorCode {
+    API_JSON_ERROR(4001, "API Json配置异常");
 
-    ErrorCode(Integer code, String msg) {
+    SwaggerError(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }

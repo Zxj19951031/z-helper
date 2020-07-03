@@ -12,3 +12,7 @@ swagger2:
 logging:
   level:
     root: info
+
+shiro:
+  realm:
+    class: org.zipper.demo.zdemo.DemoRealm

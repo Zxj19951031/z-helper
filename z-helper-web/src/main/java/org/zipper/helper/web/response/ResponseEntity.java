@@ -90,7 +90,7 @@ public class ResponseEntity<T> {
 
     private ResponseEntity(HelperException e, T data) {
         this.code = e.getCode();
-        this.message = e.getMessage();
+        this.message = e.getMsg();
         this.data = data;
     }
 

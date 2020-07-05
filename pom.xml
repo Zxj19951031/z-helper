@@ -16,7 +16,6 @@
         <module>z-helper-exception</module>
         <module>z-helper-redis</module>
         <module>z-helper-util</module>
-        <module>z-helper-oauth2</module>
         <module>z-helper-shiro</module>
     </modules>
 

@@ -2,6 +2,7 @@ package org.zipper.helper.exception;
 
 /**
  * 包装异常
+ *
  * @author zhuxj
  */
 public class HelperException extends RuntimeException {
@@ -17,12 +18,12 @@ public class HelperException extends RuntimeException {
     }
 
     private HelperException(IErrorCode error, String msg) {
-        super(String.format("%s,Detail=[%s]", error.toString(), msg));
+        super(msg);
         this.error = error;
     }
 
     private HelperException(IErrorCode error, Throwable e) {
-        super(String.format("%s,Detail=[%s]", error.toString(), e.getMessage()));
+        super(e.getMessage());
         this.error = error;
     }
 
@@ -42,7 +43,15 @@ public class HelperException extends RuntimeException {
         return new HelperException(ErrorCode.SYSTEM_ERROR, e);
     }
 
+    public String getMsg() {
+        return this.error.getMsg();
+    }
+
     public int getCode() {
         return this.error.getCode();
+    }
+
+    public String getTotalMessage() {
+        return String.format("%s,Detail=[%s]", error.toString(), getMessage());
     }
 }

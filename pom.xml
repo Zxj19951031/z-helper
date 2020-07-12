@@ -17,6 +17,7 @@
         <module>z-helper-redis</module>
         <module>z-helper-util</module>
         <module>z-helper-shiro</module>
+        <module>z-helper-authority-center</module>
     </modules>
 
     <properties>
@@ -39,6 +40,9 @@
         <version.slf4j.api>1.7.30</version.slf4j.api>
         <version.poi.ooxml>4.1.0</version.poi.ooxml>
         <version.shiro.spring>1.5.3</version.shiro.spring>
+        <version.mybatis.plus.boot.starter>3.3.1</version.mybatis.plus.boot.starter>
+        <version.org.mybatis.spring.boot.starter>2.1.1</version.org.mybatis.spring.boot.starter>
+        <version.org.springframework.tx>5.1.8.RELEASE</version.org.springframework.tx>
     </properties>
 
     <dependencyManagement>
@@ -106,11 +110,6 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${version.io.springfox}</version>
             </dependency>
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>swagger-bootstrap-ui</artifactId>
-                <version>${version.swagger.bootstrap.ui}</version>
-            </dependency>
 
             <dependency>
                 <groupId>org.quartz-scheduler</groupId>
@@ -150,6 +149,22 @@
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-spring-boot-web-starter</artifactId>
                 <version>${version.shiro.spring}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${version.org.springframework.tx}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${version.org.mybatis.spring.boot.starter}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${version.mybatis.plus.boot.starter}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

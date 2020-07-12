@@ -11,8 +11,17 @@ swagger2:
     basePackage: org.zipper.demo.zdemo
 logging:
   level:
+    org.zipper.demo.zdemo: debug
     root: info
 
-shiro:
-  realm:
-    class: org.zipper.demo.zdemo.DemoRealm
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/z_helper_auth?useSSL=false&characterEncoding=utf8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver

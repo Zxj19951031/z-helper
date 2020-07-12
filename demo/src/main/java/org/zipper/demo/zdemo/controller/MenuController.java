@@ -31,7 +31,7 @@ public class MenuController {
 
     @PostMapping("edit")
     public ResponseEntity<Boolean> edit(@RequestBody CustomMenu menu) {
-        return ResponseEntity.success(menuService.update(menu));
+        return ResponseEntity.success(menuService.updateById(menu));
     }
 
     @GetMapping("get")

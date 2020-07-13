@@ -1,6 +1,8 @@
 package org.zipper.helper.auth.entity.relation;
 
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 /**
  * 组织用户关联表
  * <p>
@@ -11,6 +13,7 @@ package org.zipper.helper.auth.entity.relation;
  * @author zhuxj
  * @since 2020/07/07
  */
+@TableName("tb_auth_relation_org_member")
 public class OrgMemberRelation {
 
     /**

@@ -1,9 +1,12 @@
 package org.zipper.helper.auth.entity.relation;
 
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 /**
  * 组织-用户-角色关联表
  */
+@TableName("tb_auth_relation_org_member_role")
 public class OrgMemberRoleRelation {
 
     /**

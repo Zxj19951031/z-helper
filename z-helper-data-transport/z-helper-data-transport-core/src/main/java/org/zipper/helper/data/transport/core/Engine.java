@@ -1,6 +1,5 @@
 package org.zipper.helper.data.transport.core;
 
-import cn.hutool.core.io.FileUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,11 @@ import org.zipper.helper.data.transport.core.container.JobContainer;
 import org.zipper.helper.data.transport.core.utils.LoadUtil;
 import org.zipper.helper.util.json.JsonObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 public class Engine {
@@ -85,9 +88,18 @@ public class Engine {
     public static void main(String[] args) {
 
         try {
-            String a = FileUtil.readString("/Users/zhuxj/IdeaProjects/z-dtx/allConfig.json", "utf-8");
+            InputStream is = ClassLoader.getSystemResourceAsStream("job.json");
+            InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
+            //将字符流以缓存的形式一行一行输出
+            BufferedReader bf = new BufferedReader(isr);
+            StringBuilder results = new StringBuilder();
+            String newLine = "";
+            while ((newLine = bf.readLine()) != null) {
+                results.append(newLine).append("\n");
 
-            Engine engine = new Engine(JsonObject.from(a));
+            }
+
+            Engine engine = new Engine(JsonObject.from(results.toString()));
             engine.entry();
         } catch (Throwable e) {
             logger.error(e.getMessage(), e);

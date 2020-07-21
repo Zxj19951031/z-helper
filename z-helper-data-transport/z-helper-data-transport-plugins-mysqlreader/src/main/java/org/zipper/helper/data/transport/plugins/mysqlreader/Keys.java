@@ -9,4 +9,6 @@ public class Keys {
     public static final String QUERY_TIMEOUT = "queryTimeout";
     public static final String QUERY_SQL = "querySql";
     public static final String WHERE = "where";
+    public static final String LOGIN_TIMEOUT = "loginTimeout";
+    public static final String PRIMARY_KEY = "primaryKey";
 }

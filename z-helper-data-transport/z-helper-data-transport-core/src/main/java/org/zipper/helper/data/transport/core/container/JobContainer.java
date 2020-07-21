@@ -22,7 +22,7 @@ import java.util.List;
 
 public class JobContainer extends AbstractContainer {
 
-    private static final Logger logger = LoggerFactory.getLogger(JobContainer.class);
+    private static final Logger log = LoggerFactory.getLogger(JobContainer.class);
 
     private long startTimeStamp;
     private String jobId;
@@ -44,23 +44,23 @@ public class JobContainer extends AbstractContainer {
 
     @Override
     public void start() {
-        logger.info("start job container");
+        log.info("start job container");
 
         boolean hasException = false;
 
         try {
             this.startTimeStamp = System.currentTimeMillis();
-            logger.debug("jobContainer starts to do init ...");
+            log.debug("jobContainer starts to do init ...");
             this.init();
-            logger.debug("jobContainer starts to do split ...");
+            log.debug("jobContainer starts to do split ...");
             this.totalStage = this.split();
-            logger.debug("jobContainer starts to do schedule ...");
+            log.debug("jobContainer starts to do schedule ...");
             this.schedule();
-            logger.debug("jobContainer starts to do destroy ...");
+            log.debug("jobContainer starts to do destroy ...");
             this.destroy();
 
         } catch (Throwable e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             throw HelperException.newException(e);
         }
     }
@@ -90,6 +90,8 @@ public class JobContainer extends AbstractContainer {
 
         jobReader.setJobPluginCollector((JobPluginCollector) this.pluginCollector);
         jobReader.init();
+        log.info("job reader init ok");
+
 
         classLoaderSwapper.restoreCurrentThreadClassLoader();
         return jobReader;
@@ -110,6 +112,7 @@ public class JobContainer extends AbstractContainer {
 
         jobWriter.setJobPluginCollector((JobPluginCollector) this.pluginCollector);
         jobWriter.init();
+        log.info("job writer init ok");
 
         classLoaderSwapper.restoreCurrentThreadClassLoader();
         return jobWriter;
@@ -129,7 +132,7 @@ public class JobContainer extends AbstractContainer {
 
         List<JsonObject> contentConfig = mergeReaderAndWriterTaskConfigs(
                 readerTaskConfigs, writerTaskConfigs, null);
-        logger.debug("contentConfig configuration: " + JSON.toJSONString(contentConfig));
+        log.debug("contentConfig configuration: " + JSON.toJSONString(contentConfig));
 
         this.allConfig.set(CoreConstant.JOB_CONTENT, contentConfig);
         return contentConfig.size();
@@ -147,7 +150,7 @@ public class JobContainer extends AbstractContainer {
             this.needChannelNumber = this.allConfig.getInt(
                     CoreConstant.JOB_SETTING_SPEED_CHANNEL);
 
-            logger.info("Job set Channel-Number to " + this.needChannelNumber + " channels.");
+            log.info("Job set Channel-Number to " + this.needChannelNumber + " channels.");
             return;
         }
 
@@ -164,7 +167,7 @@ public class JobContainer extends AbstractContainer {
                     CommonError.PLUGIN_SPLIT_ERROR,
                     "reader切分的task数目不能小于等于0");
         }
-        logger.info("Reader.Job [{}] splits to [{}] tasks.",
+        log.info("Reader.Job [{}] splits to [{}] tasks.",
                 this.readerPluginName, readerSlicesConfigs.size());
         classLoaderSwapper.restoreCurrentThreadClassLoader();
         return readerSlicesConfigs;
@@ -181,7 +184,7 @@ public class JobContainer extends AbstractContainer {
                     CommonError.PLUGIN_SPLIT_ERROR,
                     "writer切分的task不能小于等于0");
         }
-        logger.info("Writer.Job [{}] splits to [{}] tasks.",
+        log.info("Writer.Job [{}] splits to [{}] tasks.",
                 this.writerPluginName, writerSlicesConfigs.size());
         classLoaderSwapper.restoreCurrentThreadClassLoader();
         return writerSlicesConfigs;
@@ -236,7 +239,7 @@ public class JobContainer extends AbstractContainer {
 
         AbstractScheduler scheduler = null;
         if (ExecuteMode.STANDALONE == mode) {
-            logger.info("Running by {} Mode.", mode);
+            log.info("Running by {} Mode.", mode);
 
             scheduler = new StandAloneScheduler();
 
@@ -256,6 +259,9 @@ public class JobContainer extends AbstractContainer {
 
     private void destroy() {
         this.jobReader.destroy();
+        log.info("job reader destroy ok");
         this.jobWriter.destroy();
+        log.info("job writer destroy ok");
+
     }
 }

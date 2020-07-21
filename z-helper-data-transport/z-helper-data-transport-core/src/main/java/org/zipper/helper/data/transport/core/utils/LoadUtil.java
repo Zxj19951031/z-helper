@@ -23,7 +23,7 @@ public class LoadUtil {
 
     private static final Logger log = LoggerFactory.getLogger(LoadUtil.class);
     private static JsonObject allConfig;
-    private static final String pluginTypeNameFormat = "%s.%s";
+    private static final String PLUGIN_TYPE_NAME_FORMAT = "%s.%s";
 
     private enum ContainerType {
         Job("Job"), Task("Task");
@@ -59,8 +59,8 @@ public class LoadUtil {
         JarLoader jarLoader = jarLoaderCenter.get(generatePluginKey(pluginType, pluginName));
         if (null == jarLoader) {
             String pluginPath = pluginConf.getString("path");
-            log.info(System.getProperty("user.dir"));
-            log.info(pluginPath);
+            log.info("当前工作目录{}", System.getProperty("user.dir"));
+            log.info("期望插件所在目录{}/{}", System.getProperty("user.dir"), pluginPath);
             if (StringUtils.isBlank(pluginPath)) {
                 throw HelperException.newException(
                         CommonError.RUNTIME_ERROR,
@@ -89,7 +89,7 @@ public class LoadUtil {
     }
 
     private static String generatePluginKey(PluginType pluginType, String pluginName) {
-        return String.format(pluginTypeNameFormat, pluginType.toString(), pluginName);
+        return String.format(PLUGIN_TYPE_NAME_FORMAT, pluginType.toString(), pluginName);
     }
 
     public static AbstractJobPlugin loadJobPlugin(PluginType pluginType,

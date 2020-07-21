@@ -50,9 +50,9 @@ public abstract class AbstractMenuServiceImpl<T extends Menu, M extends BaseMapp
         menu.setStatus(0);
         super.save(menu);
 
-        if (menu.getPid().equals(0L))
+        if (menu.getPid().equals(0L)) {
             menu.setCode("0/" + menu.getId());
-        else {
+        } else {
             T parent = getById(menu.getPid());
             menu.setCode(parent.getCode() + "/" + menu.getId());
         }

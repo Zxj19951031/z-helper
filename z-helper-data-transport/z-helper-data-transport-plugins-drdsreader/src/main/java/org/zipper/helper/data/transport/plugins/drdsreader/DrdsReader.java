@@ -51,12 +51,15 @@ public class DrdsReader extends Reader {
                                 jdbcUrl, username, password));
             } finally {
                 try {
-                    if (resultSet != null)
+                    if (resultSet != null) {
                         resultSet.close();
-                    if (statement != null)
+                    }
+                    if (statement != null) {
                         statement.close();
-                    if (connection != null)
+                    }
+                    if (connection != null) {
                         connection.close();
+                    }
                 } catch (SQLException e) {
                     log.error(e.getMessage(), e);
                 }
@@ -195,12 +198,15 @@ public class DrdsReader extends Reader {
                 throw HelperException.newException(PluginError.TASK_READ_ERROR, e);
             } finally {
                 try {
-                    if (resultSet != null)
+                    if (resultSet != null) {
                         resultSet.close();
-                    if (statement != null)
+                    }
+                    if (statement != null) {
                         statement.close();
-                    if (connection != null)
+                    }
+                    if (connection != null) {
                         connection.close();
+                    }
                 } catch (SQLException e) {
                     log.error(e.getMessage(), e);
                 }

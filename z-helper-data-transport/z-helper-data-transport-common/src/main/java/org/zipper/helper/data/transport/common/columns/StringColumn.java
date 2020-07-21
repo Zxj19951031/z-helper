@@ -22,6 +22,7 @@ public class StringColumn extends Column {
         super(Type.STRING, (null == rawData ? 0 : rawData.length()), rawData);
     }
 
+    @Override
     public Long asLong() {
         if (null == this.getData()) {
             return null;
@@ -40,9 +41,11 @@ public class StringColumn extends Column {
         }
     }
 
+    @Override
     public Double asDouble() {
-        if (this.getData() == null)
+        if (this.getData() == null) {
             return null;
+        }
 
         String data = (String) this.getData();
         if ("NaN".equals(data)) {
@@ -60,6 +63,7 @@ public class StringColumn extends Column {
         return asBigDecimal().doubleValue();
     }
 
+    @Override
     public String asString() {
         if (null == this.getData()) {
             return null;
@@ -68,6 +72,7 @@ public class StringColumn extends Column {
         return (String) this.getData();
     }
 
+    @Override
     public Date asDate() {
         try {
             return ColumnCast.string2Date(this);
@@ -78,6 +83,7 @@ public class StringColumn extends Column {
         }
     }
 
+    @Override
     public byte[] asBytes() {
         try {
             return ColumnCast.string2Bytes(this);
@@ -88,6 +94,7 @@ public class StringColumn extends Column {
         }
     }
 
+    @Override
     public Boolean asBoolean() {
         if (null == this.getData()) {
             return null;
@@ -106,6 +113,7 @@ public class StringColumn extends Column {
                 String.format("String[\"%s\"]不能转为Bool .", this.asString()));
     }
 
+    @Override
     public BigDecimal asBigDecimal() {
         if (null == this.getData()) {
             return null;
@@ -122,6 +130,7 @@ public class StringColumn extends Column {
         }
     }
 
+    @Override
     public BigInteger asBigInteger() {
         if (null == this.getData()) {
             return null;

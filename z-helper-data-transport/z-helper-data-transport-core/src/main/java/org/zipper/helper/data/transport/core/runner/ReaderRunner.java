@@ -26,18 +26,20 @@ public class ReaderRunner extends AbstractRunner implements Runnable {
             this.running();
 
             taskReader.init();
+            log.info("task reader init ok");
 
             taskReader.startRead(tunnel);
 
             taskReader.destroy();
+            log.info("task destroy init ok");
 
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            log.error("执行读取插件Task异常", e);
             this.error();
         } finally {
             if (autoTerminate) {
                 tunnel.terminate();
-                log.info("reader autoTerminate");
+                log.info("task reader auto terminate");
             }
             this.finish();
         }

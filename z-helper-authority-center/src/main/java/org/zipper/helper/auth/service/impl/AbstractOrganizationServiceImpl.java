@@ -38,9 +38,9 @@ public abstract class AbstractOrganizationServiceImpl<T extends Organization, M 
         org.setStatus(0);
         super.save(org);
 
-        if (org.getPid().equals(0L))
+        if (org.getPid().equals(0L)) {
             org.setCode("0/" + org.getId());
-        else {
+        } else {
             T parent = getById(org.getPid());
             org.setCode(parent.getCode() + "/" + org.getId());
         }

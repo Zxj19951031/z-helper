@@ -28,40 +28,45 @@ public class MysqlWriter extends Writer {
             String jdbcUrl = this.getAllConfig().getString(Keys.JDBC_URL);
             String username = this.getAllConfig().getString(Keys.USERNAME);
             String password = this.getAllConfig().getString(Keys.PASSWORD);
+            int loginTimeout = this.getAllConfig().getInt(Keys.LOGIN_TIMEOUT, 120);
+            int queryTimeout = this.getAllConfig().getInt(Keys.QUERY_TIMEOUT, 60);
 
             Connection connection = null;
             Statement statement = null;
             ResultSet resultSet = null;
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                DriverManager.setLoginTimeout(120);
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                log.info("设置登录超时时间[{}]秒...", loginTimeout);
+                DriverManager.setLoginTimeout(loginTimeout);
+                log.info("尝试连接至目标数据源...");
                 connection = DriverManager.getConnection(jdbcUrl, username, password);
-                log.info("校验数据源连通性ok");
 
                 statement = connection.createStatement();
-                statement.setQueryTimeout(60);
+                log.info("设置查询超时时间[{}]秒...", queryTimeout);
+                statement.setQueryTimeout(queryTimeout);
+
+                log.debug("校验目标读取字段及表存在性...");
                 String sql = String.format("select * from (%s) as tmp where 1=0", SqlUtil.buildQuerySql(getAllConfig()));
-                log.debug("校验字段及表: " + sql);
-
                 resultSet = statement.executeQuery(sql);
-                log.info("校验查询ok");
-
 
             } catch (SQLException | ClassNotFoundException e) {
-                log.error(e.getMessage(), e);
+                log.error("插件初始化异常!!!", e);
                 throw HelperException.newException(CommonError.PLUGIN_INIT_ERROR,
                         String.format("初始化插件失败，目标地址:[%s]，用户名：[%s],密码：[%s]",
                                 jdbcUrl, username, password));
             } finally {
                 try {
-                    if (resultSet != null)
+                    if (null != resultSet) {
                         resultSet.close();
-                    if (statement != null)
+                    }
+                    if (null != statement) {
                         statement.close();
-                    if (connection != null)
+                    }
+                    if (null != connection) {
                         connection.close();
+                    }
                 } catch (SQLException e) {
-                    log.error(e.getMessage(), e);
+                    log.error("关闭数据库连接失败!!!", e);
                 }
             }
         }
@@ -77,7 +82,6 @@ public class MysqlWriter extends Writer {
 
         @Override
         public void destroy() {
-            log.info("destroy");
         }
     }
 
@@ -90,8 +94,13 @@ public class MysqlWriter extends Writer {
 
         @Override
         public void init() {
+            log.info("统计计划写入目标数据源字段数...");
             columnNumber = this.getAllConfig().getList(Keys.COLUMNS).size();
+            log.info("columnNumber:[{}]", columnNumber);
+
+            log.info("构建插入Sql...");
             sql = SqlUtil.buildInsertSql(getAllConfig());
+            log.info(sql);
         }
 
         @Override
@@ -100,11 +109,15 @@ public class MysqlWriter extends Writer {
             String username = this.getAllConfig().getString(Keys.USERNAME);
             String password = this.getAllConfig().getString(Keys.PASSWORD);
             int bufferSize = this.getAllConfig().getInt(Keys.BUFFER_SIZE, 1000);
+            int loginTimeout = this.getAllConfig().getInt(Keys.LOGIN_TIMEOUT, 120);
+
+            log.info("设置缓冲区大小，单次最大提交[{}]条记录...", bufferSize);
             List<Record> buffer = new ArrayList<>(bufferSize);
 
             Connection connection = null;
             try {
-                DriverManager.setLoginTimeout(120);
+                log.info("设置登录超时时间[{}]秒...", loginTimeout);
+                DriverManager.setLoginTimeout(loginTimeout);
                 connection = DriverManager.getConnection(jdbcUrl, username, password);
                 connection.setAutoCommit(false);
 
@@ -112,8 +125,9 @@ public class MysqlWriter extends Writer {
 
                 Record record = null;
                 while ((record = consumer.consume()) != null) {
-                    if (record instanceof SkipRecord)
+                    if (record instanceof SkipRecord) {
                         continue;
+                    }
                     buffer.add(record);
                     if (buffer.size() >= bufferSize) {
                         doBatchInsert(connection, buffer);
@@ -124,14 +138,15 @@ public class MysqlWriter extends Writer {
                     doBatchInsert(connection, buffer);
                 }
             } catch (SQLException e) {
-                log.error(e.getMessage(), e);
+                log.error("向目标数据源插入数据异常", e);
                 throw HelperException.newException(PluginError.TASK_READ_ERROR, e);
             } finally {
                 try {
-                    if (connection != null)
+                    if (null != connection) {
                         connection.close();
+                    }
                 } catch (SQLException e) {
-                    log.error(e.getMessage(), e);
+                    log.error("关闭数据源连接失败!!!", e);
                 }
             }
         }
@@ -142,7 +157,6 @@ public class MysqlWriter extends Writer {
         }
 
         private void doBatchInsert(Connection connection, List<Record> buffer) throws SQLException {
-            log.info("待执行的新增Sql：{}", sql);
 
             PreparedStatement preparedStatement = null;
             try {
@@ -155,6 +169,7 @@ public class MysqlWriter extends Writer {
                 preparedStatement.executeBatch();
                 connection.commit();
             } catch (SQLException e) {
+                log.error("向目标数据源批量插入数据异常，尝试回滚并单条插入...", e);
                 connection.rollback();
                 doOneInsert(connection, buffer);
             } finally {
@@ -299,22 +314,22 @@ public class MysqlWriter extends Writer {
             PreparedStatement preparedStatement = null;
             try {
                 connection.setAutoCommit(true);
-                preparedStatement = connection
-                        .prepareStatement(this.sql);
+                preparedStatement = connection.prepareStatement(this.sql);
 
                 for (Record record : buffer) {
                     try {
                         fillPreparedStatement(preparedStatement, record);
                         preparedStatement.execute();
                     } catch (SQLException e) {
-                        log.error(e.getMessage(), e);
+                        log.warn("将缓冲区记录插入至目标数据源失败，跳过该条记录[{}]", record.toString());
+                        log.error("详细错误", e);
                     }
                 }
             } catch (Exception e) {
-                log.error(e.getMessage(), e);
+                log.error("向目标数据源插入记录异常!!!", e);
                 throw HelperException.newException(PluginError.TASK_WRITE_ERROR);
             } finally {
-                if (preparedStatement != null) {
+                if (null != preparedStatement) {
                     preparedStatement.clearParameters();
                     preparedStatement.close();
                 }

@@ -54,12 +54,15 @@ public class DrdsWriter extends Writer {
                                 jdbcUrl, username, password));
             } finally {
                 try {
-                    if (resultSet != null)
+                    if (resultSet != null) {
                         resultSet.close();
-                    if (statement != null)
+                    }
+                    if (statement != null) {
                         statement.close();
-                    if (connection != null)
+                    }
+                    if (connection != null) {
                         connection.close();
+                    }
                 } catch (SQLException e) {
                     log.error(e.getMessage(), e);
                 }
@@ -112,8 +115,9 @@ public class DrdsWriter extends Writer {
 
                 Record record = null;
                 while ((record = consumer.consume()) != null) {
-                    if (record instanceof SkipRecord)
+                    if (record instanceof SkipRecord) {
                         continue;
+                    }
                     buffer.add(record);
                     if (buffer.size() >= bufferSize) {
                         doBatchInsert(connection, buffer);
@@ -128,8 +132,9 @@ public class DrdsWriter extends Writer {
                 throw HelperException.newException(PluginError.TASK_READ_ERROR, e);
             } finally {
                 try {
-                    if (connection != null)
+                    if (connection != null) {
                         connection.close();
+                    }
                 } catch (SQLException e) {
                     log.error(e.getMessage(), e);
                 }

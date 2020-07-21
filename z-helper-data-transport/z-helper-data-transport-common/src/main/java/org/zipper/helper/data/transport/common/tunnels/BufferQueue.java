@@ -47,8 +47,8 @@ public class BufferQueue {
     public void doPushAll(Collection<Record> rs) {
         try {
             lock.lockInterruptibly();
-            while (this.queue.size() > 0) {
-                notInsufficient.await(100L, TimeUnit.MILLISECONDS);
+            while (rs.size() > this.queue.remainingCapacity()) {
+                notInsufficient.await(200L, TimeUnit.MILLISECONDS);
             }
             this.queue.addAll(rs);
             notEmpty.signalAll();
@@ -65,7 +65,7 @@ public class BufferQueue {
         try {
             lock.lockInterruptibly();
             while (this.queue.drainTo(rs) <= 0) {
-                notEmpty.await(100L, TimeUnit.MILLISECONDS);
+                notEmpty.await(200L, TimeUnit.MILLISECONDS);
             }
             notInsufficient.signalAll();
         } catch (InterruptedException e) {

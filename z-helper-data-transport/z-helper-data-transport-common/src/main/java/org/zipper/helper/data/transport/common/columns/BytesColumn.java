@@ -18,16 +18,19 @@ public class BytesColumn extends Column {
         super(Type.BYTES, null == bytes ? 0 : bytes.length, ArrayUtils.clone(bytes));
     }
 
+    @Override
     public Long asLong() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "Bytes类型不能转为Long .");
     }
 
+    @Override
     public Double asDouble() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "Bytes类型不能转为Double .");
     }
 
+    @Override
     public String asString() {
         if (null == this.getData()) {
             return null;
@@ -42,11 +45,13 @@ public class BytesColumn extends Column {
         }
     }
 
+    @Override
     public Date asDate() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "Bytes类型不能转为Date .");
     }
 
+    @Override
     public byte[] asBytes() {
         if (null == this.getData()) {
             return null;
@@ -55,16 +60,19 @@ public class BytesColumn extends Column {
         return (byte[]) this.getData();
     }
 
+    @Override
     public Boolean asBoolean() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "Bytes类型不能转为Boolean .");
     }
 
+    @Override
     public BigDecimal asBigDecimal() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "Bytes类型不能转为BigDecimal .");
     }
 
+    @Override
     public BigInteger asBigInteger() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "Bytes类型不能转为BigInteger .");

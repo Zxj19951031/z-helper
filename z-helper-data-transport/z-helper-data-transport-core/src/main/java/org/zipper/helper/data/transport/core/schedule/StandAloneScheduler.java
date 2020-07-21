@@ -52,8 +52,9 @@ public class StandAloneScheduler extends AbstractScheduler {
                         logger.info("累计完成读写任务共{}组", finished);
                     }
                 }
-                if (hasError || finished == taskContainers.size())
+                if (hasError || finished == taskContainers.size()) {
                     break;
+                }
 
                 Thread.sleep(jobSleepIntervalInMillSec);
             }

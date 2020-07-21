@@ -24,10 +24,12 @@ public enum ErrorCode implements IErrorCode {
     private final Integer code;
     private final String msg;
 
+    @Override
     public Integer getCode() {
         return code;
     }
 
+    @Override
     public String getMsg() {
         return msg;
     }

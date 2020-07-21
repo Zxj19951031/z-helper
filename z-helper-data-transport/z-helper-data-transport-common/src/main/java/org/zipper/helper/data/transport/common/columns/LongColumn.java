@@ -58,6 +58,7 @@ public class LongColumn extends Column {
     }
 
 
+    @Override
     public Long asLong() {
         BigInteger rawData = (BigInteger) this.getData();
         if (null == rawData) {
@@ -69,6 +70,7 @@ public class LongColumn extends Column {
         return rawData.longValue();
     }
 
+    @Override
     public Double asDouble() {
 
         if (null == this.getData()) {
@@ -81,6 +83,7 @@ public class LongColumn extends Column {
         return decimal.doubleValue();
     }
 
+    @Override
     public String asString() {
 
         if (null == this.getData()) {
@@ -89,6 +92,7 @@ public class LongColumn extends Column {
         return this.getData().toString();
     }
 
+    @Override
     public Date asDate() {
         if (null == this.getData()) {
             return null;
@@ -96,11 +100,13 @@ public class LongColumn extends Column {
         return new Date(this.asLong());
     }
 
+    @Override
     public byte[] asBytes() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "Long类型不能转为Bytes .");
     }
 
+    @Override
     public Boolean asBoolean() {
         if (null == this.getData()) {
             return null;
@@ -109,6 +115,7 @@ public class LongColumn extends Column {
         return this.asBigInteger().compareTo(BigInteger.ZERO) != 0;
     }
 
+    @Override
     public BigDecimal asBigDecimal() {
 
         if (null == this.getData()) {
@@ -118,6 +125,7 @@ public class LongColumn extends Column {
         return new BigDecimal(this.asBigInteger());
     }
 
+    @Override
     public BigInteger asBigInteger() {
 
         if (null == this.getData()) {

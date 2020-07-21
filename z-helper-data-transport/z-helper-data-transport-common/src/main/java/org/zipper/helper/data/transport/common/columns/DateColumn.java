@@ -61,15 +61,18 @@ public class DateColumn extends Column {
         this.setSubType(DateType.DATETIME);
     }
 
+    @Override
     public Long asLong() {
         return (Long) this.getData();
     }
 
+    @Override
     public Double asDouble() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "Date类型不能转为Double .");
     }
 
+    @Override
     public String asString() {
         try {
             return ColumnCast.date2String(this);
@@ -80,6 +83,7 @@ public class DateColumn extends Column {
         }
     }
 
+    @Override
     public Date asDate() {
         if (null == this.getData()) {
             return null;
@@ -88,21 +92,25 @@ public class DateColumn extends Column {
         return new Date((Long) this.getData());
     }
 
+    @Override
     public byte[] asBytes() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "Date类型不能转为Bytes .");
     }
 
+    @Override
     public Boolean asBoolean() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "Date类型不能转为Boolean .");
     }
 
+    @Override
     public BigDecimal asBigDecimal() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "Date类型不能转为BigDecimal .");
     }
 
+    @Override
     public BigInteger asBigInteger() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "Date类型不能转为BigInteger .");

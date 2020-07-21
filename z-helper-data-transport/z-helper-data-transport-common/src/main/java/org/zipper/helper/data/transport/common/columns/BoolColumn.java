@@ -30,6 +30,7 @@ public class BoolColumn extends Column {
         super(Type.BOOL, 1, null);
     }
 
+    @Override
     public Long asLong() {
         if (null == this.getData()) {
             return null;
@@ -38,6 +39,7 @@ public class BoolColumn extends Column {
         return this.asBoolean() ? 1L : 0L;
     }
 
+    @Override
     public Double asDouble() {
         if (null == this.getData()) {
             return null;
@@ -46,6 +48,7 @@ public class BoolColumn extends Column {
         return this.asBoolean() ? 1.0d : 0.0d;
     }
 
+    @Override
     public String asString() {
 
         if (null == super.getData()) {
@@ -55,16 +58,19 @@ public class BoolColumn extends Column {
         return this.asBoolean() ? "true" : "false";
     }
 
+    @Override
     public Date asDate() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "Bool类型不能转为Date .");
     }
 
+    @Override
     public byte[] asBytes() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "Boolean类型不能转为Bytes .");
     }
 
+    @Override
     public Boolean asBoolean() {
         if (null == super.getData()) {
             return null;
@@ -73,6 +79,7 @@ public class BoolColumn extends Column {
         return (Boolean) super.getData();
     }
 
+    @Override
     public BigDecimal asBigDecimal() {
         if (null == this.getData()) {
             return null;
@@ -81,6 +88,7 @@ public class BoolColumn extends Column {
         return BigDecimal.valueOf(this.asLong());
     }
 
+    @Override
     public BigInteger asBigInteger() {
         if (null == this.getData()) {
             return null;

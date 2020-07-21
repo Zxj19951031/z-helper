@@ -24,11 +24,13 @@ public class DataRecord implements Record {
         this.columns = new ArrayList<>();
     }
 
+    @Override
     public void addColumn(Column column) {
         this.columns.add(column);
         this.incrByteSize(column);
     }
 
+    @Override
     public void setColumn(int i, Column column) {
         if (i < 0) {
             throw HelperException.newException(ColumnError.ARGUMENT_ERROR, "不能给index小于0的column设置值");
@@ -43,6 +45,7 @@ public class DataRecord implements Record {
         this.incrByteSize(getColumn(i));
     }
 
+    @Override
     public Column getColumn(int i) {
         if (i < 0 || i >= columns.size()) {
             return null;
@@ -50,14 +53,17 @@ public class DataRecord implements Record {
         return columns.get(i);
     }
 
+    @Override
     public int getColumnNumber() {
         return this.columns.size();
     }
 
+    @Override
     public int getByteSize() {
         return byteSize;
     }
 
+    @Override
     public int getMemorySize() {
         return memorySize;
     }

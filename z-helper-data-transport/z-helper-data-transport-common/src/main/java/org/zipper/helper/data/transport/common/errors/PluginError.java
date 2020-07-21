@@ -27,6 +27,7 @@ public enum PluginError implements IErrorCode {
         return this.msg;
     }
 
+    @Override
     public String toString() {
         return String.format("Code=[%s],Message=[%s]", this.code, this.msg);
     }

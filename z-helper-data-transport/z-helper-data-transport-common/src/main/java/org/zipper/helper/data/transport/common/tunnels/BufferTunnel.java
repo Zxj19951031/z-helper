@@ -1,6 +1,8 @@
 package org.zipper.helper.data.transport.common.tunnels;
 
 import cn.hutool.core.lang.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zipper.helper.data.transport.common.commons.CoreConstant;
 import org.zipper.helper.data.transport.common.errors.CommonError;
 import org.zipper.helper.data.transport.common.records.Record;
@@ -15,8 +17,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class BufferTunnel implements RecordConsumer, RecordProducer {
 
+    private static final Logger log = LoggerFactory.getLogger(BufferTunnel.class);
+
     private final BufferQueue queue;
-    private int bufferSize;
+    private final int bufferSize;
     protected final int byteCapacity;
     private final List<Record> buffer;
     private int bufferIndex = 0;
@@ -25,7 +29,7 @@ public class BufferTunnel implements RecordConsumer, RecordProducer {
 
     public BufferTunnel(JsonObject tunnelConfig) {
         assert null != tunnelConfig;
-        this.bufferSize = tunnelConfig.getInt(CoreConstant.TUNNEL_BUFFER_SIZE, 1000);
+        this.bufferSize = tunnelConfig.getInt(CoreConstant.TUNNEL_BUFFER_SIZE, 1024);
         this.byteCapacity = tunnelConfig.getInt(CoreConstant.TUNNEL_BYTE_CAPACITY, 8 * 1024 * 1024);
         this.buffer = new ArrayList<>(this.bufferSize);
         this.queue = new BufferQueue(this.bufferSize);
@@ -41,7 +45,6 @@ public class BufferTunnel implements RecordConsumer, RecordProducer {
         if (isEmpty) {
             this.queue.doPullAll(this.buffer);
             this.bufferIndex = 0;
-            this.bufferSize = this.buffer.size();
         }
 
         Record record = this.buffer.get(this.bufferIndex++);
@@ -72,11 +75,11 @@ public class BufferTunnel implements RecordConsumer, RecordProducer {
 
         if (record.getMemorySize() > this.byteCapacity) {
 
+            log.info(String.format("单条记录超过大小限制，当前限制为:%s", this.byteCapacity));
             // TODO: 2020/2/14 单条记录的容量控制
 //            this.pluginCollector.collectDirtyRecord(record, new Exception(String.format("单条记录超过大小限制，当前限制为:%s", this.byteCapacity)));
             return;
         }
-
         boolean isFull = (this.bufferIndex >= this.bufferSize || this.memoryBytes.get() + record.getMemorySize() > this.byteCapacity);
         if (isFull || immediately) {
             flush();

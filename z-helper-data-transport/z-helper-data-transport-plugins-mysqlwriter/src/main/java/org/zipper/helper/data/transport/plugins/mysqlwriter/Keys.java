@@ -8,4 +8,6 @@ public class Keys {
     public static final String COLUMNS = "columns";
     public static final String BUFFER_SIZE = "bufferSize";
     public static final String METHOD = "method";
+    public static final String LOGIN_TIMEOUT = "loginTimeout";
+    public static final String QUERY_TIMEOUT = "queryTimeout";
 }

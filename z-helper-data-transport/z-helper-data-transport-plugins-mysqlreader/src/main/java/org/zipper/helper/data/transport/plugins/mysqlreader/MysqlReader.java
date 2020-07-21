@@ -1,6 +1,7 @@
 package org.zipper.helper.data.transport.plugins.mysqlreader;
 
 
+import cn.hutool.core.lang.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zipper.helper.data.transport.common.Reader;
@@ -15,6 +16,7 @@ import org.zipper.helper.util.json.JsonObject;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MysqlReader extends Reader {
@@ -26,57 +28,74 @@ public class MysqlReader extends Reader {
             String jdbcUrl = this.getAllConfig().getString(Keys.JDBC_URL);
             String username = this.getAllConfig().getString(Keys.USERNAME);
             String password = this.getAllConfig().getString(Keys.PASSWORD);
-
+            int loginTimeout = this.getAllConfig().getInt(Keys.LOGIN_TIMEOUT, 120);
+            int queryTimeout = this.getAllConfig().getInt(Keys.QUERY_TIMEOUT, 60);
             Connection connection = null;
             Statement statement = null;
             ResultSet resultSet = null;
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                DriverManager.setLoginTimeout(120);
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                log.info("设置登录超时时间[{}]秒...", loginTimeout);
+                DriverManager.setLoginTimeout(loginTimeout);
+
+                log.info("尝试连接至目标数据源...");
                 connection = DriverManager.getConnection(jdbcUrl, username, password);
-                log.info("校验数据源连通性ok");
-
                 statement = connection.createStatement();
-                statement.setQueryTimeout(60);
+
+                log.info("设置查询超时时间[{}]秒...", queryTimeout);
+                statement.setQueryTimeout(queryTimeout);
+
+                log.debug("校验目标读取字段及表存在性...");
                 String sql = String.format("select * from (%s) as tmp where 1=0", SqlUtil.buildQuerySql(getAllConfig()));
-                log.debug("校验字段及表: " + sql);
-
                 resultSet = statement.executeQuery(sql);
-                log.info("校验查询ok");
-
 
             } catch (SQLException | ClassNotFoundException e) {
-                log.error(e.getMessage(), e);
+                log.error("插件初始化异常!!!", e);
                 throw HelperException.newException(CommonError.PLUGIN_INIT_ERROR,
                         String.format("初始化插件失败，目标地址:[%s]，用户名：[%s],密码：[%s]",
                                 jdbcUrl, username, password));
             } finally {
                 try {
-                    if (resultSet != null)
+                    if (null != resultSet) {
                         resultSet.close();
-                    if (statement != null)
+                    }
+                    if (null != statement) {
                         statement.close();
-                    if (connection != null)
+                    }
+                    if (null != connection) {
                         connection.close();
+                    }
                 } catch (SQLException e) {
-                    log.error(e.getMessage(), e);
+                    log.error("关闭数据库连接失败!!!", e);
                 }
             }
         }
 
         @Override
         public List<JsonObject> split(int channel) {
-            List<JsonObject> configurations = new ArrayList<>();
-            for (int i = 0; i < channel; i++) {
-                configurations.add(this.getAllConfig().clone());
+            if (channel > 1) {
+                log.info("开始对任务进行分片...");
+                List<Integer> splitPrimary = SqlUtil.splitPrimary(getAllConfig(), channel);
+                List<String> splitWhere = SqlUtil.splitWhere(getAllConfig(), splitPrimary);
+
+                Assert.isTrue(splitWhere.size() == channel);
+
+                List<JsonObject> configurations = new ArrayList<>();
+                for (int i = 0; i < channel; i++) {
+                    JsonObject clonedConfig = this.getAllConfig().clone();
+                    clonedConfig.set(Keys.QUERY_SQL, splitWhere.get(i));
+                    configurations.add(clonedConfig);
+                }
+                return configurations;
+            } else {
+                return Collections.singletonList(getAllConfig().clone());
             }
-            return configurations;
         }
 
 
         @Override
         public void destroy() {
-            log.info("destroy");
+
         }
     }
 
@@ -93,26 +112,28 @@ public class MysqlReader extends Reader {
             String username = this.getAllConfig().getString(Keys.USERNAME);
             String jdbcUrl = this.getAllConfig().getString(Keys.JDBC_URL);
             String password = this.getAllConfig().getString(Keys.PASSWORD);
-            int fetchSize = Integer.MIN_VALUE;
-            int queryTimeout = getAllConfig().getInt(Keys.QUERY_TIMEOUT, 120);
+            int loginTimeout = this.getAllConfig().getInt(Keys.LOGIN_TIMEOUT, 120);
+            int queryTimeout = getAllConfig().getInt(Keys.QUERY_TIMEOUT, 60);
 
             Connection connection = null;
             PreparedStatement statement = null;
             ResultSet resultSet = null;
             try {
-                DriverManager.setLoginTimeout(120);
+                log.info("设置登录超时时间[{}]秒...", loginTimeout);
+                DriverManager.setLoginTimeout(loginTimeout);
+                log.info("尝试连接至目标数据源...");
                 connection = DriverManager.getConnection(jdbcUrl, username, password);
                 connection.setAutoCommit(false);
-                log.info("构建数据库链接ok");
 
+                log.info("构建查询Sql...");
                 String sql = SqlUtil.buildQuerySql(getAllConfig());
-                log.info("待处理Sql:{}", sql);
+                log.info(sql);
 
-                statement = connection.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY,
-                        ResultSet.CONCUR_READ_ONLY);
-                statement.setFetchSize(fetchSize);
+                statement = connection.prepareStatement(sql,
+                        ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+                statement.setFetchSize(Integer.MIN_VALUE);
+                log.info("设置查询超时时间[{}]秒...", queryTimeout);
                 statement.setQueryTimeout(queryTimeout);
-                log.info("构建预处理ok");
 
                 resultSet = statement.executeQuery();
                 ResultSetMetaData metaData = resultSet.getMetaData();
@@ -192,18 +213,21 @@ public class MysqlReader extends Reader {
                 }
 
             } catch (SQLException e) {
-                log.error(e.getMessage(), e);
+                log.error("从目标数据源读取数据失败!!!", e);
                 throw HelperException.newException(PluginError.TASK_READ_ERROR, e);
             } finally {
                 try {
-                    if (resultSet != null)
+                    if (null != resultSet) {
                         resultSet.close();
-                    if (statement != null)
+                    }
+                    if (null != statement) {
                         statement.close();
-                    if (connection != null)
+                    }
+                    if (null != connection) {
                         connection.close();
+                    }
                 } catch (SQLException e) {
-                    log.error(e.getMessage(), e);
+                    log.error("关闭数据库连接失败!!!", e);
                 }
             }
         }

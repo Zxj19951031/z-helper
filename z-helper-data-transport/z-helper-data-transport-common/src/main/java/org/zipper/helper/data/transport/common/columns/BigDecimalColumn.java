@@ -54,6 +54,7 @@ public class BigDecimalColumn extends Column {
     }
 
 
+    @Override
     public Long asLong() {
         if (null == this.getData()) {
             return null;
@@ -65,6 +66,7 @@ public class BigDecimalColumn extends Column {
         return result.longValue();
     }
 
+    @Override
     public Double asDouble() {
         if (null == this.getData()) {
             return null;
@@ -83,6 +85,7 @@ public class BigDecimalColumn extends Column {
         return result.doubleValue();
     }
 
+    @Override
     public String asString() {
         if (null == this.getData()) {
             return null;
@@ -90,21 +93,25 @@ public class BigDecimalColumn extends Column {
         return (String) this.getData();
     }
 
+    @Override
     public Date asDate() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "BigDecimal类型无法转为Date类型 .");
     }
 
+    @Override
     public byte[] asBytes() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "BigDecimal类型无法转为Bytes类型 .");
     }
 
+    @Override
     public Boolean asBoolean() {
         throw HelperException.newException(
                 ColumnError.CONVERT_NOT_SUPPORT, "BigDecimal类型无法转为Bool .");
     }
 
+    @Override
     public BigDecimal asBigDecimal() {
         if (null == this.getData()) {
             return null;
@@ -119,6 +126,7 @@ public class BigDecimalColumn extends Column {
         }
     }
 
+    @Override
     public BigInteger asBigInteger() {
         if (null == this.getData()) {
             return null;

@@ -1,0 +1,44 @@
+{
+  "job": {
+    "id": "1",
+    "content": {
+      "reader": {
+        "name": "mysqlreader",
+        "parameter": {
+          "jdbcUrl": "jdbc:mysql://localhost:3306/z_test?useUnicode=true&characterEncoding=utf-8",
+          "username": "root",
+          "password": "123456",
+          "table": "tb_big_data",
+          "columns": [
+            "id",
+            "title"
+          ],
+          "primaryKey": "id"
+        }
+      },
+      "writer": {
+        "name": "mysqlwriter",
+        "parameter": {
+          "jdbcUrl": "jdbc:mysql://localhost:3306/z_test?useUnicode=true&characterEncoding=utf-8",
+          "username": "root",
+          "password": "123456",
+          "table": "tb_big_data_to",
+          "method": "insert",
+          "columns": [
+            "id",
+            "title"
+          ]
+        }
+      }
+    },
+    "setting": {
+      "speed": {
+        "channel": 1
+      }
+    }
+  },
+  "tunnel": {
+    "bufferSize": 1024,
+    "byteCapacity": 8388608
+  }
+}

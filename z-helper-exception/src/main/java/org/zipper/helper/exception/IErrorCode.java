@@ -6,5 +6,6 @@ public interface IErrorCode {
 
     String getMsg();
 
+    @Override
     String toString();
 }

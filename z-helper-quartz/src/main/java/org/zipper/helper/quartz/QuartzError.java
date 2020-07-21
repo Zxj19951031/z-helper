@@ -12,7 +12,7 @@ public enum QuartzError implements IErrorCode {
     ADD_JOB_ERROR(2007, "添加任务异常"),
     STOP_JOB_ERROR(2008, "停止任务异常"),
     INTERRUPT_JOB_ERROR(2009, "中断任务异常"),
-    ;
+    CRON_ERROR(2010, "调度表达式异常");
 
     private final Integer code;
     private final String msg;

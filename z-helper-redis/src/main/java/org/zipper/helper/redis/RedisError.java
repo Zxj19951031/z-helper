@@ -5,15 +5,16 @@ import org.zipper.helper.exception.IErrorCode;
 public enum RedisError implements IErrorCode {
     INIT_ERROR(3001, "Redis实例初始化异常"),
     EXPIRE_TIME_ERROR(3002, "过期时间异常"),
-    PARAMETER_ERROR(3003, "参数异常");
+    PARAMETER_ERROR(3003, "参数异常"),
+    SET_ERROR(3004, "设置失败");
 
     RedisError(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    private Integer code;
-    private String msg;
+    private final Integer code;
+    private final String msg;
 
     @Override
     public Integer getCode() {

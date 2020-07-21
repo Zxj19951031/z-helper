@@ -68,8 +68,9 @@ public class QuartzUtils {
      */
     public static void addJobListener(JobListener jobListener) {
 
-        if (scheduler == null)
+        if (scheduler == null) {
             throw HelperException.newException(QuartzError.INIT_ERROR, "实例未初始化");
+        }
 
         try {
             scheduler.getListenerManager().addJobListener(jobListener);
@@ -87,10 +88,12 @@ public class QuartzUtils {
      */
     public static void addJobListener(JobListener jobListener, String jobGroup) {
 
-        if (scheduler == null)
+        if (scheduler == null) {
             throw HelperException.newException(QuartzError.INIT_ERROR, "实例未初始化");
-        if (jobGroup == null || "".equals(jobGroup))
+        }
+        if (jobGroup == null || "".equals(jobGroup)) {
             throw HelperException.newException(QuartzError.PARAMETER_ERROR, "未指定Job Group");
+        }
 
         try {
             GroupMatcher<JobKey> matcher = GroupMatcher.jobGroupEquals(jobGroup);
@@ -110,14 +113,17 @@ public class QuartzUtils {
      */
     public static void addJobListener(JobListener jobListener, String jobName, String jobGroup) {
 
-        if (scheduler == null)
+        if (scheduler == null) {
             throw HelperException.newException(QuartzError.INIT_ERROR, "实例未初始化");
+        }
 
-        if (jobName == null || "".equals(jobName))
+        if (jobName == null || "".equals(jobName)) {
             throw HelperException.newException(QuartzError.PARAMETER_ERROR, "未指定Job Name");
+        }
 
-        if (jobGroup == null || "".equals(jobGroup))
+        if (jobGroup == null || "".equals(jobGroup)) {
             throw HelperException.newException(QuartzError.PARAMETER_ERROR, "未指定Job Group");
+        }
 
         try {
             Matcher<JobKey> matcher = KeyMatcher.keyEquals(new JobKey(jobName, jobGroup));
@@ -137,14 +143,17 @@ public class QuartzUtils {
      * @return true ：存在 | false ：不存在
      */
     public static boolean checkExists(String jobName, String jobGroup) {
-        if (scheduler == null)
+        if (scheduler == null) {
             throw HelperException.newException(QuartzError.INIT_ERROR, "实例未初始化");
+        }
 
-        if (jobName == null || "".equals(jobName))
+        if (jobName == null || "".equals(jobName)) {
             throw HelperException.newException(QuartzError.PARAMETER_ERROR, "未指定Job Name");
+        }
 
-        if (jobGroup == null || "".equals(jobGroup))
+        if (jobGroup == null || "".equals(jobGroup)) {
             throw HelperException.newException(QuartzError.PARAMETER_ERROR, "未指定Job Group");
+        }
 
         try {
             return scheduler.checkExists(JobKey.jobKey(jobName, jobGroup));
@@ -201,20 +210,25 @@ public class QuartzUtils {
     public static void addJob(String jobName, String jobGroup, String triggerName, String triggerGroup,
                               Class<? extends Job> consumer, ScheduleBuilder<? extends Trigger> builder,
                               Map<String, Object> data) {
-        if (scheduler == null)
+        if (scheduler == null) {
             throw HelperException.newException(QuartzError.INIT_ERROR, "实例未初始化");
+        }
 
-        if (jobName == null || "".equals(jobName))
+        if (jobName == null || "".equals(jobName)) {
             throw HelperException.newException(QuartzError.PARAMETER_ERROR, "未指定Job Name");
+        }
 
-        if (jobGroup == null || "".equals(jobGroup))
+        if (jobGroup == null || "".equals(jobGroup)) {
             throw HelperException.newException(QuartzError.PARAMETER_ERROR, "未指定Job Group");
+        }
 
-        if (triggerName == null || "".equals(triggerName))
+        if (triggerName == null || "".equals(triggerName)) {
             throw HelperException.newException(QuartzError.PARAMETER_ERROR, "未指定Trigger Name");
+        }
 
-        if (triggerGroup == null || "".equals(triggerGroup))
+        if (triggerGroup == null || "".equals(triggerGroup)) {
             throw HelperException.newException(QuartzError.PARAMETER_ERROR, "未指定Trigger Group");
+        }
 
         try {
             JobDetail job = newJob(consumer)
@@ -256,14 +270,17 @@ public class QuartzUtils {
      */
     public static boolean stopJob(String jobName, String jobGroup) {
 
-        if (scheduler == null)
+        if (scheduler == null) {
             throw HelperException.newException(QuartzError.INIT_ERROR, "实例未初始化");
+        }
 
-        if (jobName == null || "".equals(jobName))
+        if (jobName == null || "".equals(jobName)) {
             throw HelperException.newException(QuartzError.PARAMETER_ERROR, "未指定Job Name");
+        }
 
-        if (jobGroup == null || "".equals(jobGroup))
+        if (jobGroup == null || "".equals(jobGroup)) {
             throw HelperException.newException(QuartzError.PARAMETER_ERROR, "未指定Job Name");
+        }
         try {
             boolean result = scheduler.deleteJob(JobKey.jobKey(jobName, jobGroup));
             logger.info(String.format("结束任务:[%s],返回:[%s]", jobName, result));
@@ -291,14 +308,17 @@ public class QuartzUtils {
      */
     public static boolean interruptJob(String jobName, String jobGroup) {
 
-        if (scheduler == null)
+        if (scheduler == null) {
             throw HelperException.newException(QuartzError.INIT_ERROR, "实例未初始化");
+        }
 
-        if (jobName == null || "".equals(jobName))
+        if (jobName == null || "".equals(jobName)) {
             throw HelperException.newException(QuartzError.PARAMETER_ERROR, "未指定Job Name");
+        }
 
-        if (jobGroup == null || "".equals(jobGroup))
+        if (jobGroup == null || "".equals(jobGroup)) {
             throw HelperException.newException(QuartzError.PARAMETER_ERROR, "未指定Job Name");
+        }
 
         try {
             boolean result = scheduler.interrupt(JobKey.jobKey(jobName, jobGroup));

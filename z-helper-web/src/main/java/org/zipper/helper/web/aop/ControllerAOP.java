@@ -43,7 +43,7 @@ public class ControllerAOP {
         } else {
             logger.error(pjp.getSignature() + " 方法异常 ", e);
             //TODO 未知的异常，应该格外注意，可以发送邮件通知等
-            result = ResponseEntity.error(HelperException.newException(ErrorCode.SYSTEM_ERROR, e));
+            result = ResponseEntity.error(HelperException.newException(ErrorCode.SYSTEM_ERROR, "非预期异常，请联系管理员"));
         }
 
         return result;

@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DynamicDataSourceContextHolder {
-    private static final ThreadLocal<String> contextHolder = new ThreadLocal<>();
+    private static final ThreadLocal<String> CONTEXT_HOLDER = new ThreadLocal<>();
     public static List<String> dataSourceIds = new ArrayList<>();
 
     public static void setDataSourceType(String dataSourceType) {
-        contextHolder.set(dataSourceType);
+        CONTEXT_HOLDER.set(dataSourceType);
     }
 
     public static String getDataSourceType() {
-        return contextHolder.get();
+        return CONTEXT_HOLDER.get();
     }
 
     public static void clearDataSourceType() {
-        contextHolder.remove();
+        CONTEXT_HOLDER.remove();
     }
 
     /**

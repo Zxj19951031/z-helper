@@ -561,13 +561,14 @@ public class RedisUtil {
             throw HelperException.newException(RedisError.INIT_ERROR, "未初始化RedisTemplate实例");
         }
 
-        Boolean result = redisTemplate.opsForValue().setIfAbsent(key, key, time, TimeUnit.SECONDS);
+//        Boolean result = redisTemplate.opsForValue().set(key, key, time, TimeUnit.SECONDS);
 
-        if (result == null) {
-            throw HelperException.newException(RedisError.SET_ERROR, "新增锁失败");
-        }
-
-        return result;
+//        if (result == null) {
+//            throw HelperException.newException(RedisError.SET_ERROR, "新增锁失败");
+//        }
+//
+//        return result;
+        return true;
     }
 
 }

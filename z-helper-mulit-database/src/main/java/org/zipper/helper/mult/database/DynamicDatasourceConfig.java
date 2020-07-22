@@ -26,7 +26,7 @@ import java.util.Properties;
 public class DynamicDatasourceConfig {
 
     @NestedConfigurationProperty
-    private Map<Object, Object> datasource = new HashMap<>();
+    private final Map<Object, Object> datasource = new HashMap<>();
 
     public void setDatasource(Map<String, Properties> properties) {
         properties.forEach((k, prop) -> {
@@ -51,6 +51,7 @@ public class DynamicDatasourceConfig {
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
         dynamicDataSource.setDefaultTargetDataSource(datasource.get("master"));
         dynamicDataSource.setTargetDataSources(datasource);
+        dynamicDataSource.afterPropertiesSet();
         return dynamicDataSource;
     }
 
@@ -59,7 +60,7 @@ public class DynamicDatasourceConfig {
      *
      * @return PlatformTransactionManager
      */
-    @Bean
+    @Bean(name = "dynamicTransactionManager")
     public PlatformTransactionManager transactionManager() {
         return new DataSourceTransactionManager(dynamicDataSource());
     }

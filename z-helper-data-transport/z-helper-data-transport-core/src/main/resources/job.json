@@ -33,7 +33,10 @@
     },
     "setting": {
       "speed": {
-        "channel": 1
+        "channel": 2
+      },
+      "report": {
+        "interval": 5000
       }
     }
   },

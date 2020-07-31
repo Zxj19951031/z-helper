@@ -24,7 +24,6 @@ public class JobContainer extends AbstractContainer {
 
     private static final Logger log = LoggerFactory.getLogger(JobContainer.class);
 
-    private long startTimeStamp;
     private String jobId;
     private Reader.Job jobReader;
     private Writer.Job jobWriter;
@@ -49,7 +48,6 @@ public class JobContainer extends AbstractContainer {
         boolean hasException = false;
 
         try {
-            this.startTimeStamp = System.currentTimeMillis();
             log.debug("jobContainer starts to do init ...");
             this.init();
             log.debug("jobContainer starts to do split ...");
@@ -242,7 +240,8 @@ public class JobContainer extends AbstractContainer {
             log.info("Running by {} Mode.", mode);
 
             scheduler = new StandAloneScheduler();
-
+            scheduler.setJobSleepIntervalInMillSec(allConfig.getInt(CoreConstant.JOB_SETTING_REPORT_INTERVAL, 3000));
+            scheduler.setCollector((JobPluginCollector) getPluginCollector());
             scheduler.schedule(this.mergeAllConfigToTaskConfig());
         } else if (ExecuteMode.DISTRIBUTE == mode) {
             // TODO: 2020/2/14 分布式调度

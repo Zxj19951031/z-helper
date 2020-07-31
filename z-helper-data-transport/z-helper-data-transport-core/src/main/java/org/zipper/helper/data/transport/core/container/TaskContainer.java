@@ -14,13 +14,32 @@ import org.zipper.helper.data.transport.core.utils.ClassLoaderSwapper;
 import org.zipper.helper.data.transport.core.utils.LoadUtil;
 import org.zipper.helper.util.json.JsonObject;
 
+/**
+ * task容器
+ *
+ * @author zhuxj
+ */
 public class TaskContainer extends AbstractContainer {
 
+    /**
+     * 读取线程
+     */
     private Thread readerThread;
+    /**
+     * 写入线程
+     */
     private Thread writerThread;
+    /**
+     * 读取任务
+     */
     private ReaderRunner readerRunner;
+    /**
+     * 写入任务
+     */
     private WriterRunner writerRunner;
-
+    /**
+     * 传输通道
+     */
     private final BufferTunnel tunnel;
     private Reader.Task taskReader;
     private Writer.Task taskWriter;
@@ -35,8 +54,9 @@ public class TaskContainer extends AbstractContainer {
 
     public TaskContainer(JsonObject taskConfig) {
         super(taskConfig);
-        this.tunnel = new BufferTunnel(taskConfig);
         this.pluginCollector = new TaskPluginCollector();
+        this.tunnel = new BufferTunnel(taskConfig);
+        this.tunnel.setPluginCollector((TaskPluginCollector) this.pluginCollector);
     }
 
     @Override

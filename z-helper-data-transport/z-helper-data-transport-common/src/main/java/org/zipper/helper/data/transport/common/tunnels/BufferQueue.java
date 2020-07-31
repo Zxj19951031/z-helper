@@ -13,6 +13,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 基于阻塞队列进行缓冲
+ *
+ * @author zhuxj
  */
 public class BufferQueue {
     private ArrayBlockingQueue<Record> queue = null;
@@ -47,7 +49,7 @@ public class BufferQueue {
     public void doPushAll(Collection<Record> rs) {
         try {
             lock.lockInterruptibly();
-            while (rs.size() > this.queue.remainingCapacity()) {
+            while (this.queue.size() > 0) {
                 notInsufficient.await(200L, TimeUnit.MILLISECONDS);
             }
             this.queue.addAll(rs);

@@ -17,6 +17,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * mysql 写插件
+ *
+ * @author zhuxj
+ */
 public class MysqlWriter extends Writer {
 
     public static class Job extends Writer.Job {
@@ -171,6 +176,7 @@ public class MysqlWriter extends Writer {
             } catch (SQLException e) {
                 log.error("向目标数据源批量插入数据异常，尝试回滚并单条插入...", e);
                 connection.rollback();
+                this.getTaskPluginCollector().decrWriteCnt(buffer.size());
                 doOneInsert(connection, buffer);
             } finally {
                 if (preparedStatement != null) {
@@ -320,9 +326,11 @@ public class MysqlWriter extends Writer {
                     try {
                         fillPreparedStatement(preparedStatement, record);
                         preparedStatement.execute();
+                        this.getTaskPluginCollector().incrWriteCnt(1);
                     } catch (SQLException e) {
                         log.warn("将缓冲区记录插入至目标数据源失败，跳过该条记录[{}]", record.toString());
                         log.error("详细错误", e);
+                        this.getTaskPluginCollector().incrErrorCnt(1);
                     }
                 }
             } catch (Exception e) {

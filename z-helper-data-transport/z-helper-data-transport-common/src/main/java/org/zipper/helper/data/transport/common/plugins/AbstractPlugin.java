@@ -2,9 +2,24 @@ package org.zipper.helper.data.transport.common.plugins;
 
 import org.zipper.helper.util.json.JsonObject;
 
+
+/**
+ * 顶层插件抽象
+ *
+ * @author zhuxj
+ */
 public abstract class AbstractPlugin {
+    /**
+     * 插件名称
+     */
     private String pluginName;
+    /**
+     * 插件配置
+     */
     private JsonObject pluginConfig;
+    /**
+     * 全局配置
+     */
     private JsonObject allConfig;
 
     public AbstractPlugin() {

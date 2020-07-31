@@ -12,6 +12,7 @@ public class CoreConstant {
     public static final String JOB_SETTING_SPEED_BPS = "job.setting.speed.bps";
     public static final String JOB_SETTING_SPEED_TPS = "job.setting.speed.tps";
     public static final String JOB_SETTING_SPEED_CHANNEL = "job.setting.speed.channel";
+    public static final String JOB_SETTING_REPORT_INTERVAL = "job.setting.report.interval";
     public static final String JOB_READER_NAME = "job.reader.name";
     public static final String JOB_READER_PARAMETER = "job.reader.parameter";
     public static final String JOB_WRITER_NAME = "job.writer.name";

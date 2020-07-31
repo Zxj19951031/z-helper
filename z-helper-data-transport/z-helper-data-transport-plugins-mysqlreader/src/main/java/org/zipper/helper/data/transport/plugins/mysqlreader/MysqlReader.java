@@ -19,6 +19,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * mysql 读取插件
+ *
+ * @author zhuxj
+ */
 public class MysqlReader extends Reader {
     public static class Job extends Reader.Job {
         private static final Logger log = LoggerFactory.getLogger(MysqlReader.Job.class);

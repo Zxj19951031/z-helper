@@ -38,10 +38,10 @@
       "report": {
         "interval": 5000
       }
+    },
+    "tunnel": {
+      "bufferSize": 1024,
+      "byteCapacity": 8388608
     }
-  },
-  "tunnel": {
-    "bufferSize": 1024,
-    "byteCapacity": 8388608
   }
 }

@@ -53,7 +53,6 @@ public class MysqlReader extends Reader {
                 log.debug("校验目标读取字段及表存在性...");
                 String sql = String.format("select * from (%s) as tmp where 1=0", SqlUtil.buildQuerySql(getAllConfig()));
                 resultSet = statement.executeQuery(sql);
-
             } catch (SQLException | ClassNotFoundException e) {
                 log.error("插件初始化异常!!!", e);
                 throw HelperException.newException(CommonError.PLUGIN_INIT_ERROR,
@@ -109,7 +108,6 @@ public class MysqlReader extends Reader {
 
         @Override
         public void init() {
-
         }
 
         @Override

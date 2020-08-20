@@ -41,7 +41,7 @@ public class SqlUtil {
         columns.replaceAll(a -> "?");
         String unknown = CollectionUtil.join(columns, ",");
 
-        switch (config.getString(Keys.METHOD)) {
+        switch (config.getString(Keys.METHOD, "insert")) {
             case "insert":
                 return String.format(insertMode, getTableName(config), getColumns(config), unknown);
             case "update":

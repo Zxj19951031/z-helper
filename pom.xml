@@ -26,10 +26,10 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
 
-        <version.org.zipper.web>1.0.0</version.org.zipper.web>
-        <version.org.zipper.exception>1.0.0</version.org.zipper.exception>
-        <version.org.zipper.util>1.0.0</version.org.zipper.util>
-        <version.org.zipper.swagger>1.0.0</version.org.zipper.swagger>
+        <version.org.zipper.web>1.0.1</version.org.zipper.web>
+        <version.org.zipper.exception>1.0.1</version.org.zipper.exception>
+        <version.org.zipper.util>1.0.1</version.org.zipper.util>
+        <version.org.zipper.swagger>1.0.1</version.org.zipper.swagger>
         <version.spring.boot.starter>2.3.1.RELEASE</version.spring.boot.starter>
         <version.alibaba.druid>1.1.18</version.alibaba.druid>
         <version.alibaba.fastjson>1.2.59</version.alibaba.fastjson>

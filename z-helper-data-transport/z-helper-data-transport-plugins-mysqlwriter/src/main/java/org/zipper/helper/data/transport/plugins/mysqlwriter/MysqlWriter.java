@@ -50,8 +50,9 @@ public class MysqlWriter extends Writer {
                 log.info("设置查询超时时间[{}]秒...", queryTimeout);
                 statement.setQueryTimeout(queryTimeout);
 
-                log.debug("校验目标读取字段及表存在性...");
+                log.info("校验目标读取字段及表存在性...");
                 String sql = String.format("select * from (%s) as tmp where 1=0", SqlUtil.buildQuerySql(getAllConfig()));
+                log.debug("running sql {}", sql);
                 resultSet = statement.executeQuery(sql);
 
             } catch (SQLException | ClassNotFoundException e) {
@@ -328,8 +329,7 @@ public class MysqlWriter extends Writer {
                         preparedStatement.execute();
                         this.getTaskPluginCollector().incrWriteCnt(1);
                     } catch (SQLException e) {
-                        log.warn("将缓冲区记录插入至目标数据源失败，跳过该条记录[{}]", record.toString());
-                        log.error("详细错误", e);
+                        log.warn("将缓冲区记录插入至目标数据源失败，跳过该条记录[{}]，错误原因[{}]", record.toString(), e.getMessage());
                         this.getTaskPluginCollector().incrErrorCnt(1);
                     }
                 }

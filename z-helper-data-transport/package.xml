@@ -20,27 +20,14 @@
 
         <!-- reader -->
         <fileSet>
-            <directory>z-helper-data-transport-plugins-drdsreader/target/dtx-drdsreader/</directory>
-            <includes>
-                <include>**/*.*</include>
-            </includes>
-            <outputDirectory>dtx</outputDirectory>
-        </fileSet>
-        <fileSet>
             <directory>z-helper-data-transport-plugins-mysqlreader/target/dtx-mysqlreader/</directory>
             <includes>
                 <include>**/*.*</include>
             </includes>
             <outputDirectory>dtx</outputDirectory>
         </fileSet>
+
         <!-- writer -->
-        <fileSet>
-            <directory>z-helper-data-transport-plugins-drdswriter/target/dtx-drdswriter/</directory>
-            <includes>
-                <include>**/*.*</include>
-            </includes>
-            <outputDirectory>dtx</outputDirectory>
-        </fileSet>
         <fileSet>
             <directory>z-helper-data-transport-plugins-mysqlwriter/target/dtx-mysqlwriter/</directory>
             <includes>
@@ -49,7 +36,7 @@
             <outputDirectory>dtx</outputDirectory>
         </fileSet>
         <fileSet>
-            <directory>z-helper-data-transport-plugins-streamwriter/target/dtx-streamwriter/</directory>
+            <directory>z-helper-data-transport-plugins-oraclewriter/target/dtx-oraclewriter/</directory>
             <includes>
                 <include>**/*.*</include>
             </includes>

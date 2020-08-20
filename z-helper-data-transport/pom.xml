@@ -18,9 +18,7 @@
         <module>z-helper-data-transport-common</module>
         <module>z-helper-data-transport-plugins-mysqlreader</module>
         <module>z-helper-data-transport-plugins-mysqlwriter</module>
-        <module>z-helper-data-transport-plugins-streamwriter</module>
-        <module>z-helper-data-transport-plugins-drdswriter</module>
-        <module>z-helper-data-transport-plugins-drdsreader</module>
+        <module>z-helper-data-transport-plugins-oraclewriter</module>
     </modules>
 
     <build>

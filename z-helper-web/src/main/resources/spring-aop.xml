@@ -11,7 +11,7 @@
     <!-- 声明通知类 -->
     <aop:aspectj-autoproxy/>
 
-    <bean id="controllerAop" class="org.zipper.helper.web.aop.ControllerAOP"/>
+    <bean id="controllerAop" class="org.zipper.helper.web.aop.ControllerAop"/>
 
     <aop:config>
         <aop:aspect id="myAop" ref="controllerAop">

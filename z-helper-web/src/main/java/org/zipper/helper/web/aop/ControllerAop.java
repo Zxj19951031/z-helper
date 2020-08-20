@@ -13,8 +13,8 @@ import org.zipper.helper.web.response.ResponseEntity;
  *
  * @author zhuxj
  */
-public class ControllerAOP {
-    private static final Logger logger = LoggerFactory.getLogger(ControllerAOP.class);
+public class ControllerAop {
+    private static final Logger logger = LoggerFactory.getLogger(ControllerAop.class);
 
     public Object handlerControllerMethod(ProceedingJoinPoint pjp) {
         long startTime = System.currentTimeMillis();

@@ -251,7 +251,7 @@ public class JobContainer extends AbstractContainer {
     private List<JsonObject> mergeAllConfigToTaskConfig() {
         List<JsonObject> taskConfigs = this.allConfig.getListJsonObject(CoreConstant.JOB_CONTENT);
         for (JsonObject taskConfig : taskConfigs) {
-            taskConfig.set(CoreConstant.TUNNEL, this.allConfig.getJsonObject(CoreConstant.TUNNEL));
+            taskConfig.set(CoreConstant.JOB_TUNNEL, this.allConfig.getJsonObject(CoreConstant.JOB_TUNNEL));
         }
         return taskConfigs;
     }

@@ -1,6 +1,6 @@
 package org.zipper.helper.web.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * 带有日期相关的实体
@@ -10,22 +10,22 @@ import java.time.LocalDate;
  */
 public abstract class DatetimeEntity {
 
-    private LocalDate createTime;
-    private LocalDate updateTime;
+    private LocalDateTime createTime;
+    private LocalDateTime updateTime;
 
-    public LocalDate getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDate createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public LocalDate getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDate updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 }

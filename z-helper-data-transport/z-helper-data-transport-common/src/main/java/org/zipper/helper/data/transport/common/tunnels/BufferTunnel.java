@@ -59,8 +59,8 @@ public class BufferTunnel implements RecordConsumer, RecordProducer {
 
     public BufferTunnel(JsonObject tunnelConfig) {
         assert null != tunnelConfig;
-        this.bufferSize = tunnelConfig.getInt(CoreConstant.TUNNEL_BUFFER_SIZE, 1024);
-        this.byteCapacity = tunnelConfig.getInt(CoreConstant.TUNNEL_BYTE_CAPACITY, 8 * 1024 * 1024);
+        this.bufferSize = tunnelConfig.getInt(CoreConstant.JOB_TUNNEL_BUFFER_SIZE, 1024);
+        this.byteCapacity = tunnelConfig.getInt(CoreConstant.JOB_TUNNEL_BYTE_CAPACITY, 8 * 1024 * 1024);
         this.bufferIn = new ArrayList<>(this.bufferSize);
         this.bufferOut = new ArrayList<>();
         this.queue = new BufferQueue(this.bufferSize);

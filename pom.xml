@@ -19,6 +19,7 @@
         <module>z-helper-shiro</module>
         <module>z-helper-authority-center</module>
         <module>z-helper-data-transport</module>
+        <module>z-helper-log4web</module>
     </modules>
 
     <properties>
@@ -29,7 +30,7 @@
         <version.org.zipper.exception>1.0.0</version.org.zipper.exception>
         <version.org.zipper.util>1.0.0</version.org.zipper.util>
         <version.org.zipper.swagger>1.0.0</version.org.zipper.swagger>
-        <version.spring.boot.starter>2.0.4.RELEASE</version.spring.boot.starter>
+        <version.spring.boot.starter>2.3.1.RELEASE</version.spring.boot.starter>
         <version.alibaba.druid>1.1.18</version.alibaba.druid>
         <version.alibaba.fastjson>1.2.59</version.alibaba.fastjson>
         <version.io.springfox>2.9.2</version.io.springfox>
@@ -46,6 +47,7 @@
         <version.org.springframework.tx>5.1.8.RELEASE</version.org.springframework.tx>
         <version.mysql.connector>8.0.20</version.mysql.connector>
         <version.logback>1.2.3</version.logback>
+        <version.oracle.jdbc>19.7.0.0</version.oracle.jdbc>
     </properties>
 
     <dependencyManagement>
@@ -172,12 +174,19 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${version.mybatis.plus.boot.starter}</version>
             </dependency>
-            <!--            mysql            -->
+            <!--            mysql  jdbc          -->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${version.mysql.connector}</version>
             </dependency>
+            <!--            oracle  jdbc          -->
+            <dependency>
+                <groupId>com.oracle.database.jdbc</groupId>
+                <artifactId>ojdbc8</artifactId>
+                <version>${version.oracle.jdbc}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

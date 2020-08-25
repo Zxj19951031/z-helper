@@ -48,6 +48,7 @@
         <version.mysql.connector>8.0.20</version.mysql.connector>
         <version.logback>1.2.3</version.logback>
         <version.oracle.jdbc>19.7.0.0</version.oracle.jdbc>
+        <version.commons.codec>1.14</version.commons.codec>
     </properties>
 
     <dependencyManagement>
@@ -186,7 +187,12 @@
                 <artifactId>ojdbc8</artifactId>
                 <version>${version.oracle.jdbc}</version>
             </dependency>
-
+            <!--     commons-codec       -->
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${version.commons.codec}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

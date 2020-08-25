@@ -11,10 +11,12 @@ public enum ErrorCode implements IErrorCode {
     PARAMETER_ERROR(1002, "参数异常"),
     IO_ERROR(1003, "IO异常"),
     UNKNOWN_TYPE(1004, "未知类型异常"),
-    QUERY_ERROR(1005, "数据库查询异常"),
-    CLOSE_ERROR(1006, "数据库连接关闭异常"),
+    QUERY_DB_ERROR(1005, "数据库查询异常"),
+    CLOSE_DB_ERROR(1006, "数据库连接关闭异常"),
     CLASS_NOT_FOUND(1007, "未发现类异常"),
-    CONNECTION_FAILED(1008, "数据库连接异常");
+    CONNECTION_FAILED(1008, "数据库连接异常"),
+    SIGNATURE_ERROR(1009, "签名认证异常"),
+    PERMISSION_ERROR(1010, "权限异常");
 
     ErrorCode(Integer code, String msg) {
         this.code = code;

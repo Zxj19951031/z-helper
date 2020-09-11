@@ -110,4 +110,36 @@ public class JobPluginCollector implements PluginCollector {
     public void setTaskPluginCollectors(List<TaskPluginCollector> taskPluginCollectors) {
         this.taskPluginCollectors = taskPluginCollectors;
     }
+
+    public LocalDateTime getStartLocalDateTime() {
+        return startLocalDateTime;
+    }
+
+    public LocalDateTime getEndLocalDateTime() {
+        return endLocalDateTime;
+    }
+
+    public BigInteger getReadCnt() {
+        return readCnt;
+    }
+
+    public void setReadCnt(BigInteger readCnt) {
+        this.readCnt = readCnt;
+    }
+
+    public BigInteger getWriteCnt() {
+        return writeCnt;
+    }
+
+    public void setWriteCnt(BigInteger writeCnt) {
+        this.writeCnt = writeCnt;
+    }
+
+    public BigInteger getErrorCnt() {
+        return errorCnt;
+    }
+
+    public void setErrorCnt(BigInteger errorCnt) {
+        this.errorCnt = errorCnt;
+    }
 }

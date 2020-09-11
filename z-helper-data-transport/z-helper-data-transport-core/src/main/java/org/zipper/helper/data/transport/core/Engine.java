@@ -3,6 +3,7 @@ package org.zipper.helper.data.transport.core;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zipper.helper.data.transport.common.collectors.PluginCollector;
 import org.zipper.helper.data.transport.common.columns.ColumnCast;
 import org.zipper.helper.data.transport.common.commons.CoreConstant;
 import org.zipper.helper.data.transport.common.commons.VMInfo;
@@ -29,8 +30,10 @@ public class Engine {
 
     /**
      * 交换入口
+     *
+     * @return
      */
-    public void entry() throws IOException {
+    public PluginCollector entry() throws IOException {
         String jobId = allConfig.getString(CoreConstant.JOB_ID, "undefined");
         allConfig.set(CoreConstant.JOB_ID, jobId);
 
@@ -46,7 +49,7 @@ public class Engine {
 
         logger.debug(allConfig.toJSON());
 
-        start();
+        return start();
     }
 
     // 注意屏蔽敏感信息
@@ -73,7 +76,7 @@ public class Engine {
         }
     }
 
-    public void start() throws IOException {
+    public PluginCollector start() throws IOException {
 
         ColumnCast.bind(allConfig);
 
@@ -83,6 +86,7 @@ public class Engine {
 
         container.start();
 
+        return container.getPluginCollector();
     }
 
     public static void main(String[] args) {

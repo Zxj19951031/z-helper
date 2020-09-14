@@ -1,4 +1,4 @@
-package org.zipper.helper.data.transport.plugins.mysqlreader;
+package org.zipper.helper.data.transport.plugins.oraclereader;
 
 import cn.hutool.core.collection.CollectionUtil;
 import org.apache.commons.lang3.StringUtils;

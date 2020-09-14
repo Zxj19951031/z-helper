@@ -1,4 +1,4 @@
-package org.zipper.helper.data.transport.plugins.mysqlreader;
+package org.zipper.helper.data.transport.plugins.oraclereader;
 
 
 import cn.hutool.core.lang.Assert;
@@ -24,9 +24,9 @@ import java.util.List;
  *
  * @author zhuxj
  */
-public class MysqlReader extends Reader {
+public class OracleReader extends Reader {
     public static class Job extends Reader.Job {
-        private static final Logger log = LoggerFactory.getLogger(MysqlReader.Job.class);
+        private static final Logger log = LoggerFactory.getLogger(Job.class);
 
         @Override
         public void init() {
@@ -39,7 +39,7 @@ public class MysqlReader extends Reader {
             Statement statement = null;
             ResultSet resultSet = null;
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
+                Class.forName("oracle.jdbc.driver.OracleDriver");
                 log.info("设置登录超时时间[{}]秒...", loginTimeout);
                 DriverManager.setLoginTimeout(loginTimeout);
 
@@ -105,7 +105,7 @@ public class MysqlReader extends Reader {
     }
 
     public static class Task extends Reader.Task {
-        private static final Logger log = LoggerFactory.getLogger(MysqlReader.Task.class);
+        private static final Logger log = LoggerFactory.getLogger(Task.class);
 
         @Override
         public void init() {

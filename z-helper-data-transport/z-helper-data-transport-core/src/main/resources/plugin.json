@@ -3,6 +3,10 @@
     "mysqlreader": {
       "path": "plugin/reader/mysqlreader",
       "class": "org.zipper.helper.data.transport.plugins.mysqlreader.MysqlReader"
+    },
+    "oraclereader": {
+      "path": "plugin/reader/oraclereader",
+      "class": "org.zipper.helper.data.transport.plugins.oraclereader.OracleReader"
     }
   },
   "writer": {

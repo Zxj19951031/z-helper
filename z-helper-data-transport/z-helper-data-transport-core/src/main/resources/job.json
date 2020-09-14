@@ -1,26 +1,13 @@
 {
   "job": {
-    "id": "1",
+    "id": "5#95",
     "content": {
       "reader": {
-        "name": "mysqlreader",
         "parameter": {
-          "jdbcUrl": "jdbc:mysql://localhost:3306/z_test?useUnicode=true&characterEncoding=utf-8",
-          "username": "root",
+          "querySql": "",
+          "postSql": "",
+          "queryTimeout": 60,
           "password": "123456",
-          "table": "tb_from",
-          "columns": [
-            "*"
-          ]
-        }
-      },
-      "writer": {
-        "name": "mysqlwriter",
-        "parameter": {
-          "jdbcUrl": "jdbc:mysql://localhost:3306/z_test?useUnicode=true&characterEncoding=utf-8",
-          "username": "root",
-          "password": "123456",
-          "table": "tb_to",
           "columns": [
             "col_varchar",
             "col_int",
@@ -28,22 +15,55 @@
             "col_float",
             "col_double",
             "col_time",
+            "col_blob",
             "col_boolean"
-          ]
-        }
-      }
-    },
-    "setting": {
-      "speed": {
-        "channel": 1
+          ],
+          "jdbcUrl": "jdbc:mysql://127.0.0.1:3306",
+          "loginTimeout": 120,
+          "where": "",
+          "table": "z_test.tb_from",
+          "username": "root",
+          "primaryKey": "",
+          "preSql": ""
+        },
+        "name": "mysqlreader"
       },
-      "report": {
-        "interval": 5000
+      "writer": {
+        "parameter": {
+          "postSql": "delete from tb_to where 1=2;",
+          "queryTimeout": 60,
+          "password": "system",
+          "columns": [
+            "COL_VARCHAR",
+            "COL_INT",
+            "COL_DECIMAL",
+            "COL_FLOAT",
+            "COL_DOUBLE",
+            "COL_TIME",
+            "COL_BLOB",
+            "COL_BOOLEAN"
+          ],
+          "jdbcUrl": "jdbc:oracle:thin:@127.0.0.1:1521:helowin",
+          "loginTimeout": 120,
+          "table": "TB_TO",
+          "username": "system",
+          "bufferSize": 1000,
+          "preSql": "delete from tb_to where 1=2;"
+        },
+        "name": "oralcewriter"
       }
     },
     "tunnel": {
-      "bufferSize": 1024,
-      "byteCapacity": 8388608
+      "byteCapacity": 8388608,
+      "bufferSize": 1024
+    },
+    "setting": {
+      "report": {
+        "interval": 5000
+      },
+      "speed": {
+        "channel": 1
+      }
     }
   }
 }

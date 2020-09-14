@@ -19,6 +19,7 @@
         <module>z-helper-data-transport-plugins-mysqlreader</module>
         <module>z-helper-data-transport-plugins-mysqlwriter</module>
         <module>z-helper-data-transport-plugins-oraclewriter</module>
+        <module>z-helper-data-transport-plugins-oraclereader</module>
     </modules>
 
     <build>

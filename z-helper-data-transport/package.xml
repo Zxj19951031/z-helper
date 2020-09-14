@@ -26,6 +26,13 @@
             </includes>
             <outputDirectory>dtx</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>z-helper-data-transport-plugins-oraclereader/target/dtx-oraclereader/</directory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <outputDirectory>dtx</outputDirectory>
+        </fileSet>
 
         <!-- writer -->
         <fileSet>
